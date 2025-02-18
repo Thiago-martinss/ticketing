@@ -1,9 +1,9 @@
 import request from 'supertest';
-import { app } from '../app';
+import { app } from '../../app';
 
-it(' fails when a email that doest not exist is supplied', async() => {
+it(' fails when a email that does not exist is supplied', async() => {
   await request(app)
-    .post('/api/users/signup')
+    .post('/api/users/signin')
     .send({ email: 'invalid@email.com', password: 'password123' })
     .expect(400);
     });
@@ -29,5 +29,5 @@ it('responds with a 201 status code and a valid JWT when valid credentials are s
     const response = await request(app)
     .post('/api/users/signin')
     .send({ email: 'test@example.com', password: 'password123' })
-    .expect(201);
+    .expect(200);
 });

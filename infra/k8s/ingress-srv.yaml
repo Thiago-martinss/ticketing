@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-service
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -18,7 +18,8 @@ spec:
                 port:
                   number: 3000
           - path: /?(.*)
-            backend?
+            pathType: ImplementationSpecific
+            backend:
               service:
                 name: client-srv
                 port:

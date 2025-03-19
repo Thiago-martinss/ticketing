@@ -58,5 +58,9 @@ it("returns an error is an invalid title is provided", async () => {
 });
 
 it("creates a ticket with valid inputs", async () => {
-  const response = await request(app).post("/api/tickets").send({});
+  await request(app).post("/api/tickets").send({
+    title: 'Test Ticket',
+    price: 20,
+  })
+  .expect(201);
 });

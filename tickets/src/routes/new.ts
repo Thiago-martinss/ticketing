@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { requireAuth, validateRequest } from "@tmatta-tickets/common";
+import { Ticket } from "../models/ticket";
 
 const router = express.Router();
 
@@ -14,8 +15,15 @@ router.post(
       .withMessage("Price must be greater than zero"),
   ],
   validateRequest,
-  (req: Request, res: Response) => {
-    res.sendStatus(200);
+  async (req: Request, res: Response) => {
+    const { title, price } = req.body;
+    const userId = req.currentUser!.id;
+
+    const ticket = Ticket.build({ title, price, userId });
+    
+    await ticket.save();
+
+    res.status(201).json(ticket);
   }
 );
 

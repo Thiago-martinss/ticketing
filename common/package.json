@@ -7,9 +7,9 @@
     "./build/**/*"
   ],
   "scripts": {
-    "clean": "del-cli ./build/*",
+   "clean": "del ./build/*",
     "build": "npm run clean && tsc",
-    "pub": "npm version patch && npm run build && npm access publish"
+    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",

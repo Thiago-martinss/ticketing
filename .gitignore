@@ -1,5 +1,6 @@
 auth/node_modules/
 client/node_modules/
 common/node_modules/
+common/build/
 tickets/node_modules/
 nats-test/node_modules

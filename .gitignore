@@ -1,5 +1,6 @@
 auth/node_modules/
 client/node_modules/
+orders/node_modules/
 common/node_modules/
 common/build/
 tickets/node_modules/

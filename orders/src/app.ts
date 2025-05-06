@@ -1,35 +1,35 @@
-import express from "express";
-import "express-async-errors";
-import { json } from "body-parser";
+import express from 'express';
+import 'express-async-errors';
+import { json } from 'body-parser';
 import {
   NotFoundError,
   errorHandler,
   currentUser,
-} from "@tmatta-tickets/common";
-import cookieSession from "cookie-session";
-import { createTicketRouter } from "./routes/new";
-import { showTicketRouter } from "./routes/show";
-import { indexTicketRouter } from "./routes";
-import { updateTicketRouter } from "./routes/update";
+} from '@tmatta-tickets/common';
+import cookieSession from 'cookie-session';
+import { deleteOrderRouter } from './routes/delete';
+import { newOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
+import { indexOrderRouter } from './routes/index';
 
 const app = express();
-app.set("trust proxy", true);
+app.set('trust proxy', true);
 app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: process.env.NODE_ENV !== "test",
+    secure: process.env.NODE_ENV !== 'test',
   })
 );
 
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter)
+app.use(deleteOrderRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
+app.use(indexOrderRouter);
 
-app.all("*", async (req, res) => {
+app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
 

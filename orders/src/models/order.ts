@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@tmatta-tickets/common';
+import { TicketDoc } from './ticket';
 
 interface OrderAttrs {
   userId: string;
@@ -54,11 +55,5 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
 };
 
 const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
-
-interface TicketDoc extends mongoose.Document {
-  id: string;
-  title: string;
-  price: number;
-}
 
 export { Order };

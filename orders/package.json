@@ -12,8 +12,7 @@
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
-    ],
-    "testTimeout": 60000
+    ]
   },
   "keywords": [],
   "author": "",

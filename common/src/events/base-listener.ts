@@ -1,5 +1,6 @@
 import { Message, Stan } from 'node-nats-streaming';
 import { Subjects } from './subjects';
+
 interface Event {
   subject: Subjects;
   data: any;
@@ -19,8 +20,8 @@ export abstract class Listener<T extends Event> {
   subscriptionOptions() {
     return this.client
       .subscriptionOptions()
-      .setManualAckMode(true)
       .setDeliverAllAvailable()
+      .setManualAckMode(true)
       .setAckWait(this.ackWait)
       .setDurableName(this.queueGroupName);
   }
@@ -44,6 +45,6 @@ export abstract class Listener<T extends Event> {
     const data = msg.getData();
     return typeof data === 'string'
       ? JSON.parse(data)
-      : JSON.parse(data.toString('utf-8'));
+      : JSON.parse(data.toString('utf8'));
   }
 }

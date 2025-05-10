@@ -1,30 +1,30 @@
-import express, { Request, Response } from "express";
-import { body } from "express-validator";
-import { requireAuth, validateRequest } from "@tmatta-tickets/common";
-import { Ticket } from "../models/ticket";
-import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
-import { natsWrapper } from "../nats-wrapper";
+import express, { Request, Response } from 'express';
+import { body } from 'express-validator';
+import { requireAuth, validateRequest } from '@tmatta-tickets/common';
+import { Ticket } from '../models/ticket';
+import { TicketCreatedPublisher } from '../events/publishers/ticket-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
 router.post(
-  "/api/tickets",
+  '/api/tickets',
   requireAuth,
   [
-    body("title").notEmpty().withMessage("Title is required"),
-    body("price")
+    body('title').not().isEmpty().withMessage('Title is required'),
+    body('price')
       .isFloat({ gt: 0 })
-      .withMessage("Price must be greater than zero"),
+      .withMessage('Price must be greater than 0'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
     const { title, price } = req.body;
-    const userId = req.currentUser!.id;
-
-    const ticket = Ticket.build({ title, price, userId });
-    
+    const ticket = Ticket.build({
+      title,
+      price,
+      userId: req.currentUser!.id,
+    });
     await ticket.save();
-
     await new TicketCreatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
       title: ticket.title,
@@ -32,7 +32,7 @@ router.post(
       userId: ticket.userId,
     });
 
-    res.status(201).json(ticket);
+    res.status(201).send(ticket);
   }
 );
 

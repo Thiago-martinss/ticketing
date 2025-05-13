@@ -9,6 +9,7 @@ interface OrderAttrs {
   expiresAt: Date;
   status: OrderStatus;
   ticket: TicketDoc;
+  //version: number;
 }
 
 interface OrderDoc extends mongoose.Document {
@@ -16,6 +17,7 @@ interface OrderDoc extends mongoose.Document {
   expiresAt: Date;
   status: OrderStatus;
   ticket: TicketDoc;
+  version: number;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {

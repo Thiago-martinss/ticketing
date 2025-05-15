@@ -3,7 +3,6 @@ import { queueGroupName } from './queue-group-name';
 import { Message } from 'node-nats-streaming';
 import { Ticket } from '../../models/ticket';
 import { TicketUpdatedPublisher } from '../publishers/ticket-updated-publisher';
-import { natsWrapper } from '../../nats-wrapper';
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   readonly subject: Subjects.OrderCreated = Subjects.OrderCreated;
@@ -18,6 +17,15 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
     ticket.set({ orderId: data.id });
     await ticket.save();
+
+    await new TicketUpdatedPublisher(this.client).publish({
+      id: ticket.id,
+      version: ticket.version,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+      orderId: ticket.orderId
+    })
     msg.ack();
   }
 }

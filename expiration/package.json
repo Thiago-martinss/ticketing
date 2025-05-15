@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tmatta-tickets/common": "^3.0.15",
+    "@tmatta-tickets/common": "^3.0.16",
     "@types/bull": "^4.10.4",
     "bull": "^4.16.5",
     "node-nats-streaming": "^0.3.2",

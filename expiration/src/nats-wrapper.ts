@@ -4,8 +4,10 @@ class NatsWrapper {
   private _client?: Stan;
 
   get client() {
-    if (!this._client)
+    if (!this._client) {
       throw new Error('Cannot access NATS client before connecting');
+    }
+
     return this._client;
   }
 

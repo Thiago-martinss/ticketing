@@ -1,6 +1,6 @@
 {
   "name": "@tmatta-tickets/common",
-  "version": "3.0.16",
+  "version": "3.0.19",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
